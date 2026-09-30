@@ -1,0 +1,75 @@
+@HostAddress = http://localhost:5000
+
+### 1. Giriş Yap ve JWT Token Al (Örnek Müşteri 1)
+# @name login
+POST {{HostAddress}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "ahmet.yilmaz@banka.com",
+  "identityNumber": "12345678901"
+}
+
+### Token'ı Değişkene Ata
+@authToken = {{login.response.body.token}}
+
+### 2. Yeni Müşteri Kaydı Oluştur
+POST {{HostAddress}}/api/auth/register
+Content-Type: application/json
+
+{
+  "firstName": "Mehmet",
+  "lastName": "Kaya",
+  "email": "mehmet.kaya@banka.com",
+  "identityNumber": "55544433321"
+}
+
+### 3. Tüm Müşterileri Listele (Yetkili)
+GET {{HostAddress}}/api/customers
+Authorization: Bearer {{authToken}}
+
+### 4. Belirli Müşteri Bilgilerini Getir
+GET {{HostAddress}}/api/customers/{{login.response.body.customerId}}
+Authorization: Bearer {{authToken}}
+
+### 5. Yeni Banka Hesabı Aç (TRY)
+POST {{HostAddress}}/api/accounts
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "customerId": "{{login.response.body.customerId}}",
+  "currency": 1,
+  "initialBalance": 5000
+}
+
+### 6. Hesaba Para Yatır
+# Not: <ACCOUNT_ID> yerine sistemdeki geçerli bir hesap GUID'si yazınız.
+POST {{HostAddress}}/api/accounts/<ACCOUNT_ID>/deposit
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "amount": 1500,
+  "description": "Nakit Gişe Yatırma"
+}
+
+### 7. Hesap Bakiyesini Sorgula
+GET {{HostAddress}}/api/accounts/<ACCOUNT_ID>/balance
+Authorization: Bearer {{authToken}}
+
+### 8. Hesaplar Arası Atomik Transfer (TransferMoneyCommand)
+POST {{HostAddress}}/api/transactions/transfer
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "sourceAccountId": "<SOURCE_ACCOUNT_ID>",
+  "targetAccountId": "<TARGET_ACCOUNT_ID>",
+  "amount": 250,
+  "description": "Fatura Paylaşımı Transferi"
+}
+
+### 9. Hesap Hareketlerini Listele
+GET {{HostAddress}}/api/accounts/<ACCOUNT_ID>/transactions
+Authorization: Bearer {{authToken}}

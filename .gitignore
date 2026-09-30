@@ -1,0 +1,19 @@
+## .NET Core / Visual Studio
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+.vs/
+.vscode/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## OS Generated
+.DS_Store
+Thumbs.db
+
+## Rider / JetBrains
+.idea/
+*.DotSettings.user
