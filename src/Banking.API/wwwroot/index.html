@@ -3,249 +3,689 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NovaBank | Yeni Nesil Dijital Bankacılık</title>
-  <meta name="description" content="NovaBank Clean Architecture Bankacılık ve Hesap Yönetimi Dijital Platformu">
+  <title>NovaBank | Yeni Nesil Kurumsal Bankacılık Platformu</title>
+  <meta name="description" content="NovaBank — Clean Architecture, CQRS ve DDD tabanlı güvenli dijital bankacılık ve hesap yönetim platformu. Gerçek zamanlı para transferi, IBAN yönetimi ve çok dövizli hesaplar.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 
-  <!-- Top Navigation -->
-  <header class="navbar">
-    <a href="/" class="brand">
-      <div class="brand-icon">⚡</div>
-      <div class="brand-text">
-        <h1>NovaBank</h1>
-        <span>Core Digital Banking</span>
+  <!-- ══════════════════════════════════════════════
+       SIDEBAR NAVIGATION
+  ══════════════════════════════════════════════ -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="brand-mark">
+        <div class="brand-icon">
+          <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="32" height="32" rx="8" fill="url(#brandGrad)"/>
+            <path d="M8 22L16 10L24 22H8Z" fill="white" opacity="0.9"/>
+            <path d="M12 22L16 15L20 22H12Z" fill="white"/>
+            <defs>
+              <linearGradient id="brandGrad" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#6366f1"/>
+                <stop offset="1" stop-color="#06b6d4"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-name">NovaBank</span>
+          <span class="brand-tagline">Digital Banking</span>
+        </div>
       </div>
-    </a>
+      <button class="sidebar-toggle-btn" id="sidebar-toggle" aria-label="Menüyü Kapat">
+        <span></span>
+      </button>
+    </div>
 
-    <div class="nav-actions">
-      <div class="status-badge">
-        <span class="status-dot"></span>
-        <span>Sistem Aktif (Live)</span>
+    <!-- User Profile Card -->
+    <div class="sidebar-profile-card" id="sidebar-profile">
+      <div class="profile-avatar" id="sidebar-avatar">AY</div>
+      <div class="profile-meta">
+        <span class="profile-name" id="sidebar-name">Yükleniyor...</span>
+        <span class="profile-status">
+          <span class="status-dot"></span>
+          Onaylı Hesap · Tier 3
+        </span>
       </div>
+    </div>
 
-      <a href="/swagger" target="_blank" class="btn-swagger">
-        <span>📖 Swagger API</span>
+    <!-- Navigation Links -->
+    <nav class="sidebar-nav">
+      <span class="nav-section-label">ANA MENÜ</span>
+
+      <a href="#" class="nav-item active" data-section="dashboard">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+          <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
+        </svg>
+        <span>Genel Bakış</span>
       </a>
 
-      <div class="user-pill">
-        <div class="user-avatar" id="user-avatar-text">AY</div>
-        <span id="user-name-display">Ahmet Yılmaz</span>
+      <a href="#" class="nav-item" data-section="accounts">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="2" y="5" width="20" height="14" rx="2"/>
+          <path d="M2 10h20"/>
+        </svg>
+        <span>Hesaplarım</span>
+        <span class="nav-badge" id="accounts-count-badge">0</span>
+      </a>
+
+      <a href="#" class="nav-item" data-section="transfer">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M7 16V4m0 0L3 8m4-4l4 4M17 8v12m0 0l4-4m-4 4l-4-4"/>
+        </svg>
+        <span>Para Transferi</span>
+      </a>
+
+      <a href="#" class="nav-item" data-section="transactions">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 12h6M9 16h4M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+        </svg>
+        <span>İşlem Geçmişi</span>
+      </a>
+
+      <span class="nav-section-label" style="margin-top: 1.5rem;">HESAP</span>
+
+      <a href="#" class="nav-item" onclick="openModal('modal-new-account'); return false;">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 5v14M5 12h14"/>
+        </svg>
+        <span>Yeni Hesap Aç</span>
+      </a>
+
+      <a href="#" class="nav-item" onclick="openModal('modal-new-customer'); return false;">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/>
+          <path d="M22 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
+        </svg>
+        <span>Yeni Müşteri Kaydı</span>
+      </a>
+
+      <a href="/swagger" target="_blank" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+        </svg>
+        <span>Swagger API</span>
+      </a>
+    </nav>
+
+    <!-- Demo User Switcher -->
+    <div class="sidebar-demo-switcher">
+      <span class="nav-section-label">DEMO KULLANICI</span>
+      <button class="demo-user-btn active" id="demo-btn-0" onclick="switchUser(DEMO_USERS[0])">
+        <div class="demo-avatar" style="background: linear-gradient(135deg, #6366f1, #8b5cf6);">AY</div>
+        <span>Ahmet Yılmaz</span>
+      </button>
+      <button class="demo-user-btn" id="demo-btn-1" onclick="switchUser(DEMO_USERS[1])">
+        <div class="demo-avatar" style="background: linear-gradient(135deg, #06b6d4, #3b82f6);">AD</div>
+        <span>Ayşe Demir</span>
+      </button>
+    </div>
+
+    <!-- System Status Footer -->
+    <div class="sidebar-footer">
+      <div class="system-status-pill">
+        <span class="pulse-dot"></span>
+        <span>TCMB FAST Sistemi Aktif</span>
       </div>
     </div>
-  </header>
+  </aside>
 
-  <!-- Main Container -->
-  <main class="container">
+  <!-- ══════════════════════════════════════════════
+       MAIN CONTENT AREA
+  ══════════════════════════════════════════════ -->
+  <div class="main-wrapper" id="main-wrapper">
 
-    <!-- Demo User Switcher Bar -->
-    <section class="user-switch-bar">
-      <div class="title">
-        <span>Aktif Demo Kullanıcısı:</span>
-        <strong id="active-user-badge">Ahmet Yılmaz</strong>
+    <!-- Top Header Bar -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="hamburger-btn" id="hamburger-btn" aria-label="Menüyü Aç">
+          <span></span><span></span><span></span>
+        </button>
+        <div class="page-breadcrumb">
+          <span class="breadcrumb-page" id="page-title">Genel Bakış</span>
+        </div>
       </div>
 
-      <div class="user-buttons">
-        <button class="btn-user-switch active" data-email="ahmet.yilmaz@banka.com" onclick="switchUser(DEMO_USERS[0])">
-          <span>👤</span> Ahmet Yılmaz (TRY / USD)
-        </button>
-        <button class="btn-user-switch" data-email="ayse.demir@banka.com" onclick="switchUser(DEMO_USERS[1])">
-          <span>👤</span> Ayşe Demir (TRY / EUR)
-        </button>
-        <button class="btn-secondary" onclick="openModal('modal-new-customer')">
-          <span>➕</span> Yeni Müşteri Kaydı
-        </button>
-      </div>
-    </section>
-
-    <!-- Accounts Section -->
-    <section>
-      <div class="section-header">
-        <h2>
-          <span>💳</span> Banka Hesaplarım
-        </h2>
-        <button class="btn-secondary" onclick="openModal('modal-new-account')">
-          <span>➕</span> Yeni Hesap Aç
-        </button>
-      </div>
-
-      <!-- Bank Cards Grid -->
-      <div class="accounts-grid" id="accounts-container">
-        <!-- Rendered dynamically via JS -->
-      </div>
-    </section>
-
-    <!-- Dashboard Main Grid (Action Hub + Transactions) -->
-    <div class="dashboard-grid">
-
-      <!-- Action Hub (Transfer / Deposit) -->
-      <section class="glass-panel">
-        <div class="tabs">
-          <button class="tab-btn active" data-tab="transfer">⚡ Havale & EFT Transferi</button>
-          <button class="tab-btn" data-tab="deposit">💳 Para Yatır</button>
-        </div>
-
-        <!-- Transfer Tab -->
-        <div id="tab-transfer">
-          <form id="transfer-form">
-            <div class="form-group">
-              <label class="form-label" for="transfer-source-account">Gönderen Hesap</label>
-              <select id="transfer-source-account" class="form-control" required></select>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label" for="transfer-target-account">Alıcı Hesap</label>
-              <select id="transfer-target-account" class="form-control" required></select>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label" for="transfer-amount">Transfer Tutarı</label>
-              <input type="number" id="transfer-amount" class="form-control" placeholder="0.00" step="0.01" min="1" required>
-              <div class="quick-amounts">
-                <button type="button" class="btn-quick-amount" data-amount="250">250 ₺</button>
-                <button type="button" class="btn-quick-amount" data-amount="500">500 ₺</button>
-                <button type="button" class="btn-quick-amount" data-amount="1000">1.000 ₺</button>
-                <button type="button" class="btn-quick-amount" data-amount="all">Tüm Bakiye</button>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label" for="transfer-description">Açıklama (Opsiyonel)</label>
-              <input type="text" id="transfer-description" class="form-control" placeholder="Örn: Kira ödemesi, fatura, borç">
-            </div>
-
-            <button type="submit" id="btn-submit-transfer" class="btn-primary">
-              <span>⚡</span> Güvenli Transfer Yap
-            </button>
-          </form>
-        </div>
-
-        <!-- Deposit Tab -->
-        <div id="tab-deposit" style="display: none;">
-          <form id="deposit-form">
-            <div class="form-group">
-              <label class="form-label" for="deposit-account">Yatırılacak Hesap</label>
-              <select id="deposit-account" class="form-control" required></select>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label" for="deposit-amount">Yatırılacak Tutar</label>
-              <input type="number" id="deposit-amount" class="form-control" placeholder="0.00" step="0.01" min="1" required>
-              <div class="quick-amounts">
-                <button type="button" class="btn-quick-amount" data-amount="1000">1.000 ₺</button>
-                <button type="button" class="btn-quick-amount" data-amount="5000">5.000 ₺</button>
-                <button type="button" class="btn-quick-amount" data-amount="10000">10.000 ₺</button>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label" for="deposit-description">Açıklama</label>
-              <input type="text" id="deposit-description" class="form-control" placeholder="Örn: Nakit Gişe / Maaş Yatırma">
-            </div>
-
-            <button type="submit" id="btn-submit-deposit" class="btn-primary">
-              <span>💳</span> Hesaba Para Yatır
-            </button>
-          </form>
-        </div>
-
-      </section>
-
-      <!-- Real-time Transaction Movements Feed -->
-      <section class="glass-panel">
-        <div class="section-header" style="margin-bottom: 1rem;">
-          <h2>
-            <span>📜</span> Hesap Hareketleri
-          </h2>
-        </div>
-
-        <div class="transactions-list" id="transactions-list">
-          <div class="empty-state">
-            <span>⏳</span> Hareketler yükleniyor...
+      <div class="topbar-center">
+        <!-- Live Market Ticker -->
+        <div class="market-ticker" aria-label="Canlı Piyasa Verileri">
+          <div class="ticker-item">
+            <span class="ticker-label">USD/TRY</span>
+            <strong class="ticker-value" id="rate-usd">34.22</strong>
+            <span class="ticker-change up">▲ 0.14%</span>
+          </div>
+          <div class="ticker-divider"></div>
+          <div class="ticker-item">
+            <span class="ticker-label">EUR/TRY</span>
+            <strong class="ticker-value" id="rate-eur">38.15</strong>
+            <span class="ticker-change up">▲ 0.22%</span>
+          </div>
+          <div class="ticker-divider"></div>
+          <div class="ticker-item">
+            <span class="ticker-label">ALTIN/GR</span>
+            <strong class="ticker-value">2.915 ₺</strong>
+            <span class="ticker-change down">▼ 0.05%</span>
+          </div>
+          <div class="ticker-divider"></div>
+          <div class="ticker-item">
+            <span class="ticker-label">BIST 100</span>
+            <strong class="ticker-value">9.870</strong>
+            <span class="ticker-change up">▲ 1.18%</span>
           </div>
         </div>
+      </div>
+
+      <div class="topbar-right">
+        <button class="topbar-icon-btn" title="Bildirimler">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0"/>
+          </svg>
+          <span class="notif-dot"></span>
+        </button>
+        <div class="topbar-profile" id="topbar-profile">
+          <div class="topbar-avatar" id="topbar-avatar">AY</div>
+          <span class="topbar-username" id="topbar-name">Ahmet Yılmaz</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- ══════════════════════════════════════════════
+         PAGE SECTIONS
+    ══════════════════════════════════════════════ -->
+    <main class="content-area">
+
+      <!-- ═══ SECTION: DASHBOARD ═══ -->
+      <section class="page-section active" id="section-dashboard">
+
+        <!-- KPI Cards Row -->
+        <div class="kpi-grid">
+          <div class="kpi-card kpi-primary">
+            <div class="kpi-header">
+              <span class="kpi-label">Toplam Varlık</span>
+              <div class="kpi-icon-wrap primary">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                </svg>
+              </div>
+            </div>
+            <div class="kpi-value" id="networth-display">0,00 ₺</div>
+            <div class="kpi-footer">
+              <span class="kpi-tag positive">↗ %2.4 bu ay</span>
+              <span class="kpi-sub">Tüm mevduat hesapları</span>
+            </div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-header">
+              <span class="kpi-label">Aylık Giriş</span>
+              <div class="kpi-icon-wrap emerald">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+                  <polyline points="17 6 23 6 23 12"/>
+                </svg>
+              </div>
+            </div>
+            <div class="kpi-value" id="monthly-inflow-display">+25.000,00 ₺</div>
+            <div class="kpi-footer">
+              <span class="kpi-tag positive">↗ Maaş & Transferler</span>
+              <span class="kpi-sub">Ekim 2026</span>
+            </div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-header">
+              <span class="kpi-label">Aylık Çıkış</span>
+              <div class="kpi-icon-wrap rose">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/>
+                  <polyline points="17 18 23 18 23 12"/>
+                </svg>
+              </div>
+            </div>
+            <div class="kpi-value negative-val" id="monthly-outflow-display">-3.250,00 ₺</div>
+            <div class="kpi-footer">
+              <span class="kpi-tag negative">↘ Bütçe Kontrolünde</span>
+              <span class="kpi-sub">Ekim 2026</span>
+            </div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-header">
+              <span class="kpi-label">Kredi Kartı Limiti</span>
+              <div class="kpi-icon-wrap amber">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="2" y="5" width="20" height="14" rx="2"/>
+                  <path d="M2 10h20"/>
+                </svg>
+              </div>
+            </div>
+            <div class="kpi-value">45.000,00 ₺</div>
+            <div class="kpi-footer">
+              <div class="mini-progress-bar">
+                <div class="mini-progress-fill" style="width: 25%"></div>
+              </div>
+              <span class="kpi-sub">Kullanılan: 15.000 / 60.000 ₺</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Accounts Section -->
+        <div class="section-header">
+          <div class="section-title-group">
+            <h2 class="section-title">Banka Hesaplarım</h2>
+            <span class="section-subtitle">IBAN'ı kopyalamak için karta tıklayın</span>
+          </div>
+          <button class="btn-outline-primary" onclick="openModal('modal-new-account')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M12 5v14M5 12h14"/>
+            </svg>
+            Yeni Hesap Aç
+          </button>
+        </div>
+
+        <div class="accounts-grid" id="accounts-container">
+          <div class="loading-placeholder">
+            <div class="spinner"></div>
+            <span>Hesaplar yükleniyor...</span>
+          </div>
+        </div>
+
+        <!-- Quick Actions + Transactions Grid -->
+        <div class="dual-panel-grid">
+
+          <!-- Action Panel -->
+          <div class="panel glass-panel">
+            <div class="panel-header">
+              <!-- Payees Quick Bar -->
+              <div class="quick-payees-section">
+                <div class="quick-payees-header">
+                  <span>Sık Kullanılanlar</span>
+                  <span class="fast-tag">FAST 7/24</span>
+                </div>
+                <div class="quick-payees-row" id="quick-payees">
+                  <div class="payee-bubble" onclick="quickFillPayee('Zeynep Demir', 'TR550006100098765432101001', 'Kira Ödemesi')">
+                    <div class="payee-ava" style="background:linear-gradient(135deg,#ec4899,#8b5cf6)">ZD</div>
+                    <span>Zeynep D.</span>
+                  </div>
+                  <div class="payee-bubble" onclick="quickFillPayee('Mehmet Kaya', 'TR440006100012345678901002', 'Haftalık Harçlık')">
+                    <div class="payee-ava" style="background:linear-gradient(135deg,#06b6d4,#3b82f6)">MK</div>
+                    <span>Mehmet K.</span>
+                  </div>
+                  <div class="payee-bubble" onclick="quickFillPayee('Netflix TR', 'TR990006100055566677788899', 'Aylık Üyelik')">
+                    <div class="payee-ava" style="background:linear-gradient(135deg,#e11d48,#9f1239)">N</div>
+                    <span>Netflix</span>
+                  </div>
+                  <div class="payee-bubble" onclick="quickFillPayee('Turkcell', 'TR220006100011122233344455', 'Fatura Ödemesi')">
+                    <div class="payee-ava" style="background:linear-gradient(135deg,#eab308,#ca8a04)">TC</div>
+                    <span>Turkcell</span>
+                  </div>
+                  <div class="payee-bubble" onclick="quickFillPayee('Ev Sahibi', 'TR330006100077788899900011', 'Ekim Kirası')">
+                    <div class="payee-ava" style="background:linear-gradient(135deg,#10b981,#059669)">ES</div>
+                    <span>Ev Sahibi</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Tab Strip -->
+              <div class="tab-strip">
+                <button class="tab-btn active" data-tab="transfer" id="tab-btn-transfer">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M7 16V4m0 0L3 8m4-4l4 4M17 8v12m0 0l4-4m-4 4l-4-4"/>
+                  </svg>
+                  FAST / Havale & EFT
+                </button>
+                <button class="tab-btn" data-tab="deposit" id="tab-btn-deposit">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 5v14M5 12h14"/>
+                  </svg>
+                  Hesaba Para Yatır
+                </button>
+              </div>
+            </div>
+
+            <!-- Transfer Tab Content -->
+            <div class="tab-content active" id="tab-transfer">
+              <form id="transfer-form">
+                <div class="form-group">
+                  <div class="form-label-row">
+                    <label for="transfer-source-account">Gönderen Hesap</label>
+                    <span class="form-hint" id="source-acc-balance-hint">Bakiye: —</span>
+                  </div>
+                  <select id="transfer-source-account" class="form-input" required></select>
+                </div>
+
+                <div class="form-group">
+                  <div class="form-label-row">
+                    <label for="transfer-target-account">Alıcı Hesap</label>
+                    <span class="form-hint">Otomatik IBAN Eşleştirme</span>
+                  </div>
+                  <select id="transfer-target-account" class="form-input" required></select>
+                </div>
+
+                <div class="form-group">
+                  <div class="form-label-row">
+                    <label for="transfer-amount">Transfer Tutarı</label>
+                    <span class="form-hint" style="color: var(--primary)">Min: 1,00 ₺</span>
+                  </div>
+                  <div class="input-with-currency">
+                    <input type="number" id="transfer-amount" class="form-input" placeholder="0.00" step="0.01" min="1" required>
+                    <span class="currency-badge">₺</span>
+                  </div>
+                  <div class="quick-amounts">
+                    <button type="button" class="quick-amt-btn" data-amount="250">+250</button>
+                    <button type="button" class="quick-amt-btn" data-amount="500">+500</button>
+                    <button type="button" class="quick-amt-btn" data-amount="1000">+1K</button>
+                    <button type="button" class="quick-amt-btn" data-amount="5000">+5K</button>
+                    <button type="button" class="quick-amt-btn" data-amount="all">Tümü</button>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="form-label-row">
+                    <label for="transfer-description">Açıklama</label>
+                    <span class="form-hint">Maks. 250 karakter</span>
+                  </div>
+                  <input type="text" id="transfer-description" class="form-input" placeholder="Kira, yemek, borç transferi...">
+                </div>
+
+                <div class="transfer-info-row">
+                  <div class="transfer-info-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                    </svg>
+                    <span>FAST 7/24 Anlık Transfer</span>
+                  </div>
+                  <div class="transfer-info-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    </svg>
+                    <span>Masraf: 0,00 ₺ (Ücretsiz)</span>
+                  </div>
+                </div>
+
+                <button type="submit" id="btn-submit-transfer" class="btn-primary-full">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                  </svg>
+                  Güvenli FAST Transferi Başlat
+                </button>
+              </form>
+            </div>
+
+            <!-- Deposit Tab Content -->
+            <div class="tab-content" id="tab-deposit">
+              <form id="deposit-form">
+                <div class="form-group">
+                  <div class="form-label-row">
+                    <label for="deposit-account">Para Yatırılacak Hesap</label>
+                  </div>
+                  <select id="deposit-account" class="form-input" required></select>
+                </div>
+
+                <div class="form-group">
+                  <div class="form-label-row">
+                    <label for="deposit-amount">Yatırılacak Tutar</label>
+                  </div>
+                  <div class="input-with-currency">
+                    <input type="number" id="deposit-amount" class="form-input" placeholder="0.00" step="0.01" min="1" required>
+                    <span class="currency-badge">₺</span>
+                  </div>
+                  <div class="quick-amounts">
+                    <button type="button" class="quick-amt-btn" data-amount="1000">+1K</button>
+                    <button type="button" class="quick-amt-btn" data-amount="5000">+5K</button>
+                    <button type="button" class="quick-amt-btn" data-amount="10000">+10K</button>
+                    <button type="button" class="quick-amt-btn" data-amount="25000">+25K</button>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="form-label-row">
+                    <label for="deposit-description">Açıklama</label>
+                  </div>
+                  <input type="text" id="deposit-description" class="form-input" placeholder="ATM Nakit / Maaş Yatırma...">
+                </div>
+
+                <button type="submit" id="btn-submit-deposit" class="btn-primary-full">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 5v14M5 12h14"/>
+                  </svg>
+                  Hesaba Anında Para Yatır
+                </button>
+              </form>
+            </div>
+          </div>
+
+          <!-- Transactions Panel -->
+          <div class="panel glass-panel">
+            <div class="panel-header-row">
+              <h3 class="panel-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M9 12h6M9 16h4M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                </svg>
+                İşlem Geçmişi
+              </h3>
+              <div class="filter-pills">
+                <button class="filter-pill active" data-filter="all">Tümü</button>
+                <button class="filter-pill" data-filter="transfer">Transfer</button>
+                <button class="filter-pill" data-filter="deposit">Yatırılan</button>
+              </div>
+            </div>
+
+            <div class="transactions-feed" id="transactions-list">
+              <div class="loading-placeholder">
+                <div class="spinner"></div>
+                <span>İşlemler yükleniyor...</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
       </section>
 
-    </div>
+    </main>
+  </div>
 
-  </main>
+  <!-- ══════════════════════════════════════════════
+       MODALS
+  ══════════════════════════════════════════════ -->
 
-  <!-- Modal: Yeni Hesap Aç -->
-  <div class="modal-overlay" id="modal-new-account">
-    <div class="modal-card">
+  <!-- Receipt Modal -->
+  <div class="modal-overlay" id="modal-receipt">
+    <div class="modal-box" style="max-width: 440px;">
       <div class="modal-header">
-        <h3>🏦 Yeni Banka Hesabı Aç</h3>
-        <button class="modal-close" onclick="closeModal('modal-new-account')">&times;</button>
+        <div class="modal-title-row">
+          <div class="modal-icon-wrap emerald">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
+            </svg>
+          </div>
+          <h3>İşlem Dekontu</h3>
+        </div>
+        <button class="modal-close-btn" onclick="closeModal('modal-receipt')" aria-label="Kapat">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M18 6L6 18M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="receipt-body" id="receipt-paper-content">
+        <div class="receipt-brand">
+          <div class="receipt-logo">N</div>
+          <div>
+            <strong>NovaBank</strong>
+            <p>TCMB FAST Sistemi — Resmî Dekont</p>
+          </div>
+        </div>
+        <div class="receipt-date" id="receipt-date-field">30.09.2026 — 19:45</div>
+
+        <div class="receipt-rows">
+          <div class="receipt-row">
+            <span>Ref. No</span>
+            <strong id="receipt-ref-no">NVB-987214589</strong>
+          </div>
+          <div class="receipt-row">
+            <span>İşlem Türü</span>
+            <strong id="receipt-type">FAST Transferi</strong>
+          </div>
+          <div class="receipt-row">
+            <span>Gönderen</span>
+            <strong id="receipt-sender">Ahmet Yılmaz</strong>
+          </div>
+          <div class="receipt-row">
+            <span>IBAN</span>
+            <strong id="receipt-sender-iban" class="mono">TR00 0006 ...</strong>
+          </div>
+          <div class="receipt-row">
+            <span>Alıcı</span>
+            <strong id="receipt-receiver">Ayşe Demir</strong>
+          </div>
+          <div class="receipt-row receipt-amount-row">
+            <span>Tutar</span>
+            <strong id="receipt-amount">500,00 ₺</strong>
+          </div>
+          <div class="receipt-row">
+            <span>Açıklama</span>
+            <strong id="receipt-desc">Kira Ödemesi</strong>
+          </div>
+        </div>
+
+        <div class="receipt-stamp">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+          </svg>
+          Elektronik İmzalı — UUID: <span id="receipt-uuid" class="mono">...</span>
+        </div>
+      </div>
+
+      <button class="btn-primary-full" style="margin-top: 1rem;" onclick="printReceipt()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/>
+          <rect x="6" y="14" width="12" height="8"/>
+        </svg>
+        Dekontu Yazdır / PDF İndir
+      </button>
+    </div>
+  </div>
+
+  <!-- New Account Modal -->
+  <div class="modal-overlay" id="modal-new-account">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div class="modal-title-row">
+          <div class="modal-icon-wrap primary">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="5" width="20" height="14" rx="2"/>
+              <path d="M2 10h20"/>
+            </svg>
+          </div>
+          <h3>Yeni Banka Hesabı Aç</h3>
+        </div>
+        <button class="modal-close-btn" onclick="closeModal('modal-new-account')" aria-label="Kapat">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M18 6L6 18M6 6l12 12"/>
+          </svg>
+        </button>
       </div>
 
       <form id="create-account-form">
         <div class="form-group">
-          <label class="form-label" for="new-account-currency">Para Birimi</label>
-          <select id="new-account-currency" class="form-control">
-            <option value="1">Türk Lirası (TRY - ₺)</option>
-            <option value="2">Amerikan Doları (USD - $)</option>
-            <option value="3">Euro (EUR - €)</option>
+          <label class="form-label" for="new-account-currency">Hesap Türü & Para Birimi</label>
+          <select id="new-account-currency" class="form-input">
+            <option value="1">🇹🇷 Türk Lirası (TRY — ₺) · Vadesiz Mevduat</option>
+            <option value="2">🇺🇸 Amerikan Doları (USD — $) · Döviz Tevdiat</option>
+            <option value="3">🇪🇺 Euro (EUR — €) · Döviz Tevdiat</option>
           </select>
         </div>
 
         <div class="form-group">
-          <label class="form-label" for="new-account-balance">Başlangıç Bakiyesi</label>
-          <input type="number" id="new-account-balance" class="form-control" value="0" min="0" step="0.01">
+          <label class="form-label" for="new-account-balance">Açılış Başlangıç Bakiyesi</label>
+          <div class="input-with-currency">
+            <input type="number" id="new-account-balance" class="form-input" value="1000" min="0" step="0.01">
+            <span class="currency-badge">₺</span>
+          </div>
         </div>
 
-        <p style="font-size: 0.8rem; color: var(--text-dim); margin-bottom: 1.25rem;">
-          * Hesap açılışında 26 haneli resmi TR IBAN'ınız otomatik olarak üretilecektir.
-        </p>
+        <div class="info-notice">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/>
+          </svg>
+          Açılışta TCMB standartlarında 26 haneli TR IBAN'ınız otomatik atanır.
+        </div>
 
-        <button type="submit" class="btn-primary">
-          <span>✨</span> Hesabı Oluştur
+        <button type="submit" class="btn-primary-full" style="margin-top: 1.25rem;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 5v14M5 12h14"/>
+          </svg>
+          Hesabı Hemen Aç
         </button>
       </form>
     </div>
   </div>
 
-  <!-- Modal: Yeni Müşteri Kaydı -->
+  <!-- New Customer Modal -->
   <div class="modal-overlay" id="modal-new-customer">
-    <div class="modal-card">
+    <div class="modal-box">
       <div class="modal-header">
-        <h3>👤 Yeni Müşteri Kaydı</h3>
-        <button class="modal-close" onclick="closeModal('modal-new-customer')">&times;</button>
+        <div class="modal-title-row">
+          <div class="modal-icon-wrap cyan">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/>
+              <path d="M22 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
+            </svg>
+          </div>
+          <h3>Yeni Müşteri Kaydı</h3>
+        </div>
+        <button class="modal-close-btn" onclick="closeModal('modal-new-customer')" aria-label="Kapat">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M18 6L6 18M6 6l12 12"/>
+          </svg>
+        </button>
       </div>
 
       <form id="register-customer-form">
-        <div class="form-group">
-          <label class="form-label" for="reg-firstname">Ad</label>
-          <input type="text" id="reg-firstname" class="form-control" placeholder="Örn: Can" required>
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label class="form-label" for="reg-firstname">Adınız</label>
+            <input type="text" id="reg-firstname" class="form-input" placeholder="Burak" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="reg-lastname">Soyadınız</label>
+            <input type="text" id="reg-lastname" class="form-input" placeholder="Demir" required>
+          </div>
         </div>
 
         <div class="form-group">
-          <label class="form-label" for="reg-lastname">Soyad</label>
-          <input type="text" id="reg-lastname" class="form-control" placeholder="Örn: Yılmaz" required>
+          <label class="form-label" for="reg-email">E-Posta Adresi</label>
+          <input type="email" id="reg-email" class="form-input" placeholder="burak.demir@banka.com" required>
         </div>
 
         <div class="form-group">
-          <label class="form-label" for="reg-email">E-Posta</label>
-          <input type="email" id="reg-email" class="form-control" placeholder="can.yilmaz@banka.com" required>
+          <label class="form-label" for="reg-tckn">TCKN / VKN (10 veya 11 Hane)</label>
+          <input type="text" id="reg-tckn" class="form-input mono" placeholder="11 haneli TCKN" maxlength="11" minlength="10" required>
         </div>
 
-        <div class="form-group">
-          <label class="form-label" for="reg-tckn">TCKN / VKN (10-11 Hane)</label>
-          <input type="text" id="reg-tckn" class="form-control" placeholder="11 haneli TCKN" maxlength="11" minlength="10" required>
-        </div>
-
-        <button type="submit" class="btn-primary">
-          <span>🚀</span> Müşteri Hesabı Oluştur
+        <button type="submit" class="btn-primary-full" style="margin-top: 0.5rem;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+          Müşteri Kaydını Tamamla
         </button>
       </form>
     </div>
   </div>
 
-  <!-- Toast Container -->
-  <div id="toast-container"></div>
+  <!-- ══════════════════════════════════════════════
+       TOAST NOTIFICATIONS
+  ══════════════════════════════════════════════ -->
+  <div id="toast-shelf" role="alert" aria-live="polite"></div>
+
+  <!-- Mobile Overlay -->
+  <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
 
   <script src="/js/app.js"></script>
 </body>
