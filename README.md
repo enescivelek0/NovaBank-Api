@@ -3,6 +3,18 @@
 [![CI/CD Pipeline](https://github.com/enescivelek0/NovaBank-Api/actions/workflows/ci.yml/badge.svg)](https://github.com/enescivelek0/NovaBank-Api/actions/workflows/ci.yml)
 [![.NET](https://img.shields.io/badge/.NET-10.0-512BD4?logo=dotnet)](https://dotnet.microsoft.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Live Demo](https://img.shields.io/badge/🌐_Canlı_Demo-novabank--api.onrender.com-6366f1?style=flat)](https://novabank-api-1.onrender.com/index.html)
+
+---
+
+## 🌐 Canlı Demo
+
+> **👉 [https://novabank-api-1.onrender.com/index.html](https://novabank-api-1.onrender.com/index.html)**
+
+Modern, responsive ve gerçek zamanlı NovaBank dijital bankacılık arayüzüne ulaşmak için yukarıdaki bağlantıya tıklayın.  
+Swagger API dokümantasyonuna erişmek için: **[/swagger](https://novabank-api-1.onrender.com/swagger)**
+
+---
 
 **NovaBank-Api**, kurumsal standartlarda **Clean Architecture**, **CQRS (MediatR)**, **Repository & Unit of Work**, **Entity Framework Core**, **JWT Authentication** ve **xUnit / Moq** test altyapısı kullanılarak geliştirilmiş yeni nesil dijital bankacılık ve hesap yönetim REST API sistemidir.
 
