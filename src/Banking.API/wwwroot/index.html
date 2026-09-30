@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NovaBank | Yeni Nesil Dijital Bankacılık</title>
+  <meta name="description" content="NovaBank Clean Architecture Bankacılık ve Hesap Yönetimi Dijital Platformu">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- Top Navigation -->
+  <header class="navbar">
+    <a href="/" class="brand">
+      <div class="brand-icon">⚡</div>
+      <div class="brand-text">
+        <h1>NovaBank</h1>
+        <span>Core Digital Banking</span>
+      </div>
+    </a>
+
+    <div class="nav-actions">
+      <div class="status-badge">
+        <span class="status-dot"></span>
+        <span>Sistem Aktif (Live)</span>
+      </div>
+
+      <a href="/swagger" target="_blank" class="btn-swagger">
+        <span>📖 Swagger API</span>
+      </a>
+
+      <div class="user-pill">
+        <div class="user-avatar" id="user-avatar-text">AY</div>
+        <span id="user-name-display">Ahmet Yılmaz</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="container">
+
+    <!-- Demo User Switcher Bar -->
+    <section class="user-switch-bar">
+      <div class="title">
+        <span>Aktif Demo Kullanıcısı:</span>
+        <strong id="active-user-badge">Ahmet Yılmaz</strong>
+      </div>
+
+      <div class="user-buttons">
+        <button class="btn-user-switch active" data-email="ahmet.yilmaz@banka.com" onclick="switchUser(DEMO_USERS[0])">
+          <span>👤</span> Ahmet Yılmaz (TRY / USD)
+        </button>
+        <button class="btn-user-switch" data-email="ayse.demir@banka.com" onclick="switchUser(DEMO_USERS[1])">
+          <span>👤</span> Ayşe Demir (TRY / EUR)
+        </button>
+        <button class="btn-secondary" onclick="openModal('modal-new-customer')">
+          <span>➕</span> Yeni Müşteri Kaydı
+        </button>
+      </div>
+    </section>
+
+    <!-- Accounts Section -->
+    <section>
+      <div class="section-header">
+        <h2>
+          <span>💳</span> Banka Hesaplarım
+        </h2>
+        <button class="btn-secondary" onclick="openModal('modal-new-account')">
+          <span>➕</span> Yeni Hesap Aç
+        </button>
+      </div>
+
+      <!-- Bank Cards Grid -->
+      <div class="accounts-grid" id="accounts-container">
+        <!-- Rendered dynamically via JS -->
+      </div>
+    </section>
+
+    <!-- Dashboard Main Grid (Action Hub + Transactions) -->
+    <div class="dashboard-grid">
+
+      <!-- Action Hub (Transfer / Deposit) -->
+      <section class="glass-panel">
+        <div class="tabs">
+          <button class="tab-btn active" data-tab="transfer">⚡ Havale & EFT Transferi</button>
+          <button class="tab-btn" data-tab="deposit">💳 Para Yatır</button>
+        </div>
+
+        <!-- Transfer Tab -->
+        <div id="tab-transfer">
+          <form id="transfer-form">
+            <div class="form-group">
+              <label class="form-label" for="transfer-source-account">Gönderen Hesap</label>
+              <select id="transfer-source-account" class="form-control" required></select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="transfer-target-account">Alıcı Hesap</label>
+              <select id="transfer-target-account" class="form-control" required></select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="transfer-amount">Transfer Tutarı</label>
+              <input type="number" id="transfer-amount" class="form-control" placeholder="0.00" step="0.01" min="1" required>
+              <div class="quick-amounts">
+                <button type="button" class="btn-quick-amount" data-amount="250">250 ₺</button>
+                <button type="button" class="btn-quick-amount" data-amount="500">500 ₺</button>
+                <button type="button" class="btn-quick-amount" data-amount="1000">1.000 ₺</button>
+                <button type="button" class="btn-quick-amount" data-amount="all">Tüm Bakiye</button>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="transfer-description">Açıklama (Opsiyonel)</label>
+              <input type="text" id="transfer-description" class="form-control" placeholder="Örn: Kira ödemesi, fatura, borç">
+            </div>
+
+            <button type="submit" id="btn-submit-transfer" class="btn-primary">
+              <span>⚡</span> Güvenli Transfer Yap
+            </button>
+          </form>
+        </div>
+
+        <!-- Deposit Tab -->
+        <div id="tab-deposit" style="display: none;">
+          <form id="deposit-form">
+            <div class="form-group">
+              <label class="form-label" for="deposit-account">Yatırılacak Hesap</label>
+              <select id="deposit-account" class="form-control" required></select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="deposit-amount">Yatırılacak Tutar</label>
+              <input type="number" id="deposit-amount" class="form-control" placeholder="0.00" step="0.01" min="1" required>
+              <div class="quick-amounts">
+                <button type="button" class="btn-quick-amount" data-amount="1000">1.000 ₺</button>
+                <button type="button" class="btn-quick-amount" data-amount="5000">5.000 ₺</button>
+                <button type="button" class="btn-quick-amount" data-amount="10000">10.000 ₺</button>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="deposit-description">Açıklama</label>
+              <input type="text" id="deposit-description" class="form-control" placeholder="Örn: Nakit Gişe / Maaş Yatırma">
+            </div>
+
+            <button type="submit" id="btn-submit-deposit" class="btn-primary">
+              <span>💳</span> Hesaba Para Yatır
+            </button>
+          </form>
+        </div>
+
+      </section>
+
+      <!-- Real-time Transaction Movements Feed -->
+      <section class="glass-panel">
+        <div class="section-header" style="margin-bottom: 1rem;">
+          <h2>
+            <span>📜</span> Hesap Hareketleri
+          </h2>
+        </div>
+
+        <div class="transactions-list" id="transactions-list">
+          <div class="empty-state">
+            <span>⏳</span> Hareketler yükleniyor...
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+  </main>
+
+  <!-- Modal: Yeni Hesap Aç -->
+  <div class="modal-overlay" id="modal-new-account">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>🏦 Yeni Banka Hesabı Aç</h3>
+        <button class="modal-close" onclick="closeModal('modal-new-account')">&times;</button>
+      </div>
+
+      <form id="create-account-form">
+        <div class="form-group">
+          <label class="form-label" for="new-account-currency">Para Birimi</label>
+          <select id="new-account-currency" class="form-control">
+            <option value="1">Türk Lirası (TRY - ₺)</option>
+            <option value="2">Amerikan Doları (USD - $)</option>
+            <option value="3">Euro (EUR - €)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="new-account-balance">Başlangıç Bakiyesi</label>
+          <input type="number" id="new-account-balance" class="form-control" value="0" min="0" step="0.01">
+        </div>
+
+        <p style="font-size: 0.8rem; color: var(--text-dim); margin-bottom: 1.25rem;">
+          * Hesap açılışında 26 haneli resmi TR IBAN'ınız otomatik olarak üretilecektir.
+        </p>
+
+        <button type="submit" class="btn-primary">
+          <span>✨</span> Hesabı Oluştur
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Yeni Müşteri Kaydı -->
+  <div class="modal-overlay" id="modal-new-customer">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>👤 Yeni Müşteri Kaydı</h3>
+        <button class="modal-close" onclick="closeModal('modal-new-customer')">&times;</button>
+      </div>
+
+      <form id="register-customer-form">
+        <div class="form-group">
+          <label class="form-label" for="reg-firstname">Ad</label>
+          <input type="text" id="reg-firstname" class="form-control" placeholder="Örn: Can" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="reg-lastname">Soyad</label>
+          <input type="text" id="reg-lastname" class="form-control" placeholder="Örn: Yılmaz" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="reg-email">E-Posta</label>
+          <input type="email" id="reg-email" class="form-control" placeholder="can.yilmaz@banka.com" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="reg-tckn">TCKN / VKN (10-11 Hane)</label>
+          <input type="text" id="reg-tckn" class="form-control" placeholder="11 haneli TCKN" maxlength="11" minlength="10" required>
+        </div>
+
+        <button type="submit" class="btn-primary">
+          <span>🚀</span> Müşteri Hesabı Oluştur
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toast-container"></div>
+
+  <script src="/js/app.js"></script>
+</body>
+</html>

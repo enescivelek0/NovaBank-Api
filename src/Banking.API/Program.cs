@@ -94,12 +94,16 @@ using (var scope = app.Services.CreateScope())
 // Global Exception Handling Middleware
 app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
 
-// Enable Swagger UI in development and staging
+// Serve Frontend Web App
+app.UseDefaultFiles();
+app.UseStaticFiles();
+
+// Enable Swagger UI at /swagger
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
-    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Banking API v1");
-    c.RoutePrefix = string.Empty; // Swagger UI root'ta açılsın
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "NovaBank API v1");
+    c.RoutePrefix = "swagger";
 });
 
 app.UseHttpsRedirection();

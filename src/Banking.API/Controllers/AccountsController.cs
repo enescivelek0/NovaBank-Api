@@ -37,6 +37,17 @@ public class AccountsController : ApiControllerBase
     }
 
     /// <summary>
+    /// Belirtilen müşteriye ait tüm banka hesaplarını listeler.
+    /// </summary>
+    [HttpGet("customer/{customerId:guid}")]
+    [ProducesResponseType(typeof(IReadOnlyList<AccountDto>), StatusCodes.Status200OK)]
+    public async Task<ActionResult<IReadOnlyList<AccountDto>>> GetByCustomerId(Guid customerId)
+    {
+        var result = await Mediator.Send(new Banking.Application.Features.Accounts.Queries.GetAccountsByCustomerId.GetAccountsByCustomerIdQuery(customerId));
+        return Ok(result);
+    }
+
+    /// <summary>
     /// Hesabın güncel bakiye bilgisini döner.
     /// </summary>
     [HttpGet("{id:guid}/balance")]
