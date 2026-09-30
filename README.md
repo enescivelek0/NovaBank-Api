@@ -11,8 +11,7 @@
 
 > **👉 [https://novabank-api-1.onrender.com/index.html](https://novabank-api-1.onrender.com/index.html)**
 
-Modern, responsive ve gerçek zamanlı NovaBank dijital bankacılık arayüzüne ulaşmak için yukarıdaki bağlantıya tıklayın.  
-Swagger API dokümantasyonuna erişmek için: **[/swagger](https://novabank-api-1.onrender.com/swagger)**
+Swagger API dokümantasyonu: **[https://novabank-api-1.onrender.com/swagger](https://novabank-api-1.onrender.com/swagger)**
 
 ---
 
@@ -39,41 +38,7 @@ NovaBank-Api/
 
 ---
 
-## ⚡ Canlıya Dağıtım (Render Deployment)
-
-Proje **Render** üzerinde Docker tabanlı olarak doğrudan çalışacak şekilde yapılandırılmıştır.
-
-### Adım Adım Canlıya Alma:
-1. [Render Dashboard](https://dashboard.render.com/)'a gidin ve GitHub hesabınızla giriş yapın.
-2. **New +** butonuna tıklayıp **Blueprint** veya **Web Service** seçin.
-3. GitHub deponuz olan **`NovaBank-Api`** projesini seçin.
-4. Render, depodaki `render.yaml` veya `Dockerfile` dosyasını otomatik algılayacaktır.
-5. **Create Web Service** butonuna tıklayın.
-6. Birkaç dakika içinde uygulamanız dünya çapında erişilebilir bir `https://novabank-api-xxxx.onrender.com` bağlantısı üzerinden canlıya alınacaktır!
-
----
-
-## 🚀 Yerel Kurulum ve Testler
-
-### Projeyi Derleme
-```bash
-dotnet build
-```
-
-### Birim Testlerini Çalıştırma
-```bash
-dotnet test
-```
-
-### API'yi Çalıştırma
-```bash
-dotnet run --project src/Banking.API/Banking.API.csproj
-```
-Swagger UI adresi: **`http://localhost:5000`**
-
----
-
-## 📡 API Uç Noktaları Özeti
+## 📡 API Uç Noktaları
 
 | Metot | Endpoint | Açıklama |
 |---|---|---|
